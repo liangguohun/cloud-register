@@ -173,13 +173,6 @@
 	<classpathentry kind="var" path="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar" sourcepath="M2_REPO/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-test/5.0.8.RELEASE/spring-test-5.0.8.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/xmlunit/xmlunit-core/2.5.1/xmlunit-core-2.5.1.jar"/>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
