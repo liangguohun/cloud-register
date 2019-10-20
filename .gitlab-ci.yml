@@ -1,18 +1,8 @@
-image: docker:19.03
-services:
-  - docker:19.03-dind
-
-before_script:
-  - export DOCKER_HOST="tcp://localhost:2375"
-  - docker info
-
 stages:
   - package
   - docker_build
   - deploy_k8s
 variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: ""
   KUBECONFIG: /etc/deploy/config
 mvn_build_job:
   image: maven:3.3.9-jdk-8
