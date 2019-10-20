@@ -1,3 +1,6 @@
+image: docker:stable
+services:
+  - docker:dind
 stages:
   - package
   - docker_build
@@ -8,7 +11,7 @@ mvn_build_job:
   image: maven:3.3.9-jdk-8
   stage: package
   tags:
-    - cloud-registry
+    - cloud-runner
   script:
     - mvn package -B -DskipTests
     - cp target/cloud-register.jar /opt/cache
@@ -18,7 +21,7 @@ docker_build_job:
   image: maven:3.3.9-jdk-8
   stage: docker_build
   tags:
-    - cloud-registry
+    - cloud-runner
   script:
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - mkdir target
@@ -31,7 +34,7 @@ deploy_k8s_job:
   image: maven:3.3.9-jdk-8
   stage: deploy_k8s
   tags:
-    - cloud-registry
+    - cloud-runner
   script:
     - mkdir -p /etc/deploy
     - echo $kube_config |base64 -d > $KUBECONFIG
