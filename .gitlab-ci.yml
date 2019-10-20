@@ -1,6 +1,4 @@
 image: docker:19.03.1
-services:
-  - docker:dind
 stages:
   - package
   - docker_build
@@ -14,7 +12,6 @@ mvn_build_job:
   tags:
     - cloud-runner
   script:
-    - export DOCKER_HOST="tcp://localhost:2375"
     - mvn package -B -DskipTests
     - cp target/cloud-register.jar /opt/cache
     - cp Dockerfile /opt/cache
