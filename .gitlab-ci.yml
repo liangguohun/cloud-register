@@ -6,7 +6,6 @@ stages:
   - docker_build
   - deploy_k8s
 variables:
-  DOCKER_DRIVER: overlay
   SPRING_PROFILES_ACTIVE: gitlab-ci
   KUBECONFIG: /etc/deploy/config
 mvn_build_job:
