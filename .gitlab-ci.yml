@@ -6,7 +6,7 @@ stages:
 variables:
   KUBECONFIG: /etc/deploy/config
 mvn_build_job:
-  image: maven:3.3.9-jdk-8
+  image: maven:3-jdk-8
   stage: package
   tags:
     - cloud-runner
@@ -16,7 +16,7 @@ mvn_build_job:
     - cp Dockerfile /opt/cache
     - cp deployment.yaml /opt/cache/
 docker_build_job:
-  image: maven:3.3.9-jdk-8
+  image: maven:3-jdk-8
   stage: docker_build
   tags:
     - cloud-runner
@@ -29,7 +29,7 @@ docker_build_job:
     - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
     - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
 deploy_k8s_job:
-  image: maven:3.3.9-jdk-8
+  image: maven:3-jdk-8
   stage: deploy_k8s
   tags:
     - cloud-runner
