@@ -2,7 +2,6 @@ stages:
   - package
   - docker_build
   - deploy_k8s
-
 variables:
   KUBECONFIG: /etc/deploy/config
 mvn_build_job:
