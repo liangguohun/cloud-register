@@ -1,4 +1,3 @@
-image: docker:stable
 stages:
   - package
   - docker_build
