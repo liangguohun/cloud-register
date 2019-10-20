@@ -1,4 +1,6 @@
 image: docker:19.03.1
+services:
+  - docker:dind
 stages:
   - package
   - docker_build
