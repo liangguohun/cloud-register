@@ -1,0 +1,41 @@
+image: docker:stable
+stages:
+  - package
+  - docker_build
+  - deploy_k8s
+variables:
+  KUBECONFIG: /etc/deploy/config
+mvn_build_job:
+  image: maven:3.3.9-jdk-8
+  stage: package
+  tags:
+    - k8s-runner
+  script:
+    - mvn package -B -DskipTests
+    - cp target/cloud-register.jar /opt/cache
+    - cp Dockerfile /opt/cache
+    - cp deployment.yaml /opt/cache/
+docker_build_job:
+  image: maven:3.3.9-jdk-8
+  stage: docker_build
+  tags:
+    - k8s-runner
+  script:
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
+    - mkdir target
+    - cp /opt/cache/cloud-register.jar target/cloud-register.jar
+    - cp /opt/cache/Dockerfile Dockerfile
+    - cp /opt/cache/deployment.yaml deployment.yaml
+    - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
+    - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
+deploy_k8s_job:
+  image: maven:3.3.9-jdk-8
+  stage: deploy_k8s
+  tags:
+    - k8s-runner
+  script:
+    - mkdir -p /etc/deploy
+    - echo $kube_config |base64 -d > $KUBECONFIG
+    - sed -i "s/IMAGE_TAG/$CI_PIPELINE_ID/g" deployment.yaml
+    - cat deployment.yaml
+    - kubectl apply -f deployment.yaml
