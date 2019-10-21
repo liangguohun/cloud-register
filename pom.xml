@@ -56,7 +56,15 @@
 
 	<!-- 缺少提升不通过 'dependencies.dependency.version'  is missing -->
 	<dependencyManagement>
-	
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 	<!-- 形成带第三方jar包的可执行jar包，jar包目录结构如下 application.properties lib META-INF mybatis  org -->
 	<build>
