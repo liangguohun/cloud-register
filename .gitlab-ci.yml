@@ -1,3 +1,16 @@
+image: docker:19.03
+services:
+  - name: docker:19.03-dind
+    command: ["--insecure-registry=192.168.1.4:5000"]
+ 
+variables:
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_DRIVER: overlay2
+ 
+before_script:
+  - docker search node # just to test
+  - docker info # just to test
+
 stages:
   - package
   - docker_build
