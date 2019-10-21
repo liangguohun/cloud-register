@@ -19,6 +19,7 @@ mvn_build_job:
   tags:
     - cloud-runner
   script:
+    - mvn clean
     - mvn package -U -B -DskipTests
     - cp target/cloud-register.jar /opt/cache
     - cp Dockerfile /opt/cache
