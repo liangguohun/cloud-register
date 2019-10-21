@@ -54,7 +54,7 @@
 	</properties>
 
 
-	<!-- 缺少提升不通过 'dependencies.dependency.version'  is missing -->
+	<!-- 缺少不传递 'dependencies.dependency.version'  is missing -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
