@@ -7,9 +7,6 @@ variables:
   DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
-before_script:
-  - docker search node # just to test
-  - docker info # just to test
 
 stages:
   - package
