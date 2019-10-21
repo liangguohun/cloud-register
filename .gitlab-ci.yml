@@ -6,7 +6,7 @@ services:
 variables:
   DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
- 
+  KUBECONFIG: /etc/deploy/config
 before_script:
   - docker search node # just to test
   - docker info # just to test
@@ -15,8 +15,7 @@ stages:
   - package
   - docker_build
   - deploy_k8s
-variables:
-  KUBECONFIG: /etc/deploy/config
+
 mvn_build_job:
   image: 192.168.1.4:5000/maven:3.6.2-ibmjava-8-alpine
   stage: package
