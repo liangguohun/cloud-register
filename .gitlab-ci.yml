@@ -19,7 +19,7 @@ mvn_build_job:
   cache:
     key: build-cache
     paths:
-      - target
+      - target/
   tags:
     - cloud-runner
   script:
