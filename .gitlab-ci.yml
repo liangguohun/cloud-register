@@ -1,4 +1,4 @@
-﻿image: docker:19.03 # Pipeline中各个步骤阶段的构建镜像没有指定时， 默认使用docker:stable镜像 
+﻿image: docker:stable # Pipeline中各个步骤阶段的构建镜像没有指定时， 默认使用docker:stable镜像 
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -26,7 +26,7 @@ docker_build_job:
   tags:
     - cloud-runner
   only:
-    - master  #ֻ��master��֧ʱִ��
+    - master
   script:
     - docker info
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
