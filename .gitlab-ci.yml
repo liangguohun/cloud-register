@@ -1,4 +1,8 @@
-image: docker:19.03
+image: docker:19.03-dind
+
+services:
+  - name: docker:19.03-dind
+    command: ["--insecure-registry=192.168.1.4:5000"] 
  
 variables:
   KUBECONFIG: /etc/deploy/config
@@ -20,12 +24,11 @@ mvn_build_job:
     - cp Dockerfile /opt/cache/
     - cp deployment.yaml /opt/cache/
 docker_build_job:
-  image: docker:19.03-dind
   stage: docker_build
   tags:
     - cloud-runner
   script:
-    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD http://192.168.1.4:5000
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - mkdir target
     - cp /opt/cache/cloud-register.jar target/cloud-register.jar
     - cp /opt/cache/Dockerfile Dockerfile
