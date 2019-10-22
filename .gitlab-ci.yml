@@ -19,7 +19,7 @@ mvn_build_job:
   cache:
     key: bjar
     paths:
-      - target/*.jar
+      - target
   tags:
     - cloud-runner
   script:
@@ -31,7 +31,7 @@ docker_build_job:
   cache:
     key: bjar
     paths:
-      - target/*.jar
+      - target
   only:
     - master
   script:
