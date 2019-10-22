@@ -22,7 +22,7 @@ mvn_build_job:
     - cp Dockerfile /opt/cache/
     - cp deployment.yaml /opt/cache/
 docker_build_job:
-  image: registry.cn-beijing.aliyuncs.com/codepipeline/public-blueocean-codepipeline-slave-java:0.1-63b99a20 # 本阶段构建使用的构建镜像
+  image: registry.cn-beijing.aliyuncs.com/codepipeline/public-blueocean-codepipeline-slave-java:0.1-63b99a20
   stage: docker_build
   tags:
     - cloud-runner
