@@ -24,7 +24,8 @@ mvn_build_job:
     - cloud-runner
   script:
     - mvn package -B -DskipTests
-    - cp target/cloud-register.jar cache/
+    - ls -l
+    - cp target/cloud-register.jar ./cache/
 docker_build_job:
   stage: docker_build
   tags:
@@ -35,7 +36,7 @@ docker_build_job:
     # - docker info
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - mkdir target
-    - cp cache/cloud-register.jar target/cloud-register.jar
+    - cp ./cache/cloud-register.jar target/cloud-register.jar
     - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
     - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
 deploy_k8s_job:
