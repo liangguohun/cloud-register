@@ -1,7 +1,6 @@
 ﻿image: docker:19.03
 
 variables:
-  DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
   MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
