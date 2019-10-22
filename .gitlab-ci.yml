@@ -1,10 +1,9 @@
-image: fastop/docker:stable
-services:
-  - docker:dind
- 
+image: docker:stable  # Pipeline涓悇涓楠ら樁娈电殑鏋勫缓闀滃儚娌℃湁鎸囧畾鏃讹紝 榛樿浣跨敤docker:stable闀滃儚 
+
 variables:
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
+  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
 
 stages:
   - package
@@ -27,7 +26,7 @@ docker_build_job:
   tags:
     - cloud-runner
   only:
-    - master  #只在master分支时执行
+    - master  #只锟斤拷master锟斤拷支时执锟斤拷
   script:
     - docker info
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
