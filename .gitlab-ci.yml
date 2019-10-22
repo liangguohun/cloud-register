@@ -7,6 +7,9 @@ services:
 variables:
   KUBECONFIG: /etc/deploy/config
 
+before_script:
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
+
 stages:
   - package
   - docker_build
@@ -27,8 +30,9 @@ docker_build_job:
   stage: docker_build
   tags:
     - cloud-runner
+  only:
+    - master  #只在master分支时执行
   script:
-    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - mkdir target
     - cp /opt/cache/cloud-register.jar target/cloud-register.jar
     - cp /opt/cache/Dockerfile Dockerfile
