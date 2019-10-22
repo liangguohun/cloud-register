@@ -24,6 +24,7 @@ mvn_build_job:
     - cloud-runner
   script:
     - mvn package -B -DskipTests
+    - ls .
 docker_build_job:
   stage: docker_build
   tags:
@@ -36,6 +37,7 @@ docker_build_job:
     - master
   script:
     # - docker info
+    - ls .
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
     - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
