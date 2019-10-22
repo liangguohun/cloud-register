@@ -25,7 +25,7 @@ mvn_build_job:
     - cp Dockerfile /opt/cache/
     - cp deployment.yaml /opt/cache/
 docker_build_job:
-  image: 192.168.1.4:5000/maven:3.6.2-ibmjava-8-alpine
+  image: docker:19.03
   stage: docker_build
   tags:
     - cloud-runner
