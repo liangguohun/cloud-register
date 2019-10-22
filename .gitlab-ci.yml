@@ -25,7 +25,7 @@ docker_build_job:
   tags:
     - cloud-runner
   script:
-    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD http://192.168.1.4:5000
     - mkdir target
     - cp /opt/cache/cloud-register.jar target/cloud-register.jar
     - cp /opt/cache/Dockerfile Dockerfile
