@@ -2,8 +2,8 @@
 services:
   - name: docker:19.03-dind
     command: ["--insecure-registry=192.168.1.4:5000"]
+    
 variables:
-  DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
 
@@ -23,6 +23,7 @@ mvn_build_job:
     - cp target/cloud-register.jar /opt/cache/
     - cp Dockerfile /opt/cache/
     - cp deployment.yaml /opt/cache/
+
 docker_build_job:
   stage: docker_build
   tags:
@@ -38,6 +39,7 @@ docker_build_job:
     - cp /opt/cache/deployment.yaml deployment.yaml
     - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
     - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
+
 deploy_k8s_job:
   stage: deploy_k8s
   tags:
