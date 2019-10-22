@@ -1,4 +1,4 @@
-image: docker:stable  # Pipeline中各个步骤阶段的构建镜像没有指定时， 默认使用docker:stable镜像 
+﻿image: docker:stable  # Pipeline中各个步骤阶段的构建镜像没有指定时， 默认使用docker:stable镜像 
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -22,11 +22,12 @@ mvn_build_job:
     - cp Dockerfile /opt/cache/
     - cp deployment.yaml /opt/cache/
 docker_build_job:
+  image: registry.cn-beijing.aliyuncs.com/codepipeline/public-blueocean-codepipeline-slave-java:0.1-63b99a20 # 本阶段构建使用的构建镜像
   stage: docker_build
   tags:
     - cloud-runner
   only:
-    - master  #ֻ��master��֧ʱִ��
+    - master # match the branch of master 
   script:
     - docker info
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
