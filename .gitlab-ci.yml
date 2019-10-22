@@ -25,6 +25,7 @@ mvn_build_job:
     - cp Dockerfile /opt/cache/
     - cp deployment.yaml /opt/cache/
 docker_build_job:
+  image: docker:19.03-dind
   stage: docker_build
   tags:
     - cloud-runner
