@@ -1,4 +1,4 @@
-﻿image: docker:stable  # Pipeline中各个步骤阶段的构建镜像没有指定时， 默认使用docker:stable镜像 
+﻿image: docker:19.03
 
 variables:
   DOCKER_DRIVER: overlay2
