@@ -5,10 +5,8 @@ services:
     command: ["--insecure-registry=192.168.1.4:5000"] 
  
 variables:
+  DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
-
-before_script:
-    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
 
 stages:
   - package
@@ -33,6 +31,8 @@ docker_build_job:
   only:
     - master  #只在master分支时执行
   script:
+    - docker info
+    - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - mkdir target
     - cp /opt/cache/cloud-register.jar target/cloud-register.jar
     - cp /opt/cache/Dockerfile Dockerfile
