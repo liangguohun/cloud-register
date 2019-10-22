@@ -1,4 +1,4 @@
-﻿image: docker:19.03
+image: docker:19.03
 
 variables:
   DOCKER_DRIVER: overlay2
