@@ -29,7 +29,6 @@ docker_build_job:
     - master
   script:
     # - docker info
-    - ls /opt/cache
     - echo "--------------------"
     - ls /workspace
     - mkdir target && cp /workspace/cloud-register.jar target/
