@@ -1,6 +1,9 @@
 ﻿image: docker:19.03
-
+services:
+  - name: docker:19.03-dind
+    command: ["--insecure-registry=192.168.1.4:5000"]
 variables:
+  DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
   MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
