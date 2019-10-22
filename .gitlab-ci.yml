@@ -13,16 +13,11 @@ stages:
   - docker_build
   - deploy_k8s
 
-cache:
-  key: bjar
-  paths:
-    - target
-
 mvn_build_job:
   image: 192.168.1.4:5000/maven:3.6.2-ibmjava-8-alpine
   stage: package
   cache:
-    key: bjar
+    key: build-cache
     paths:
       - target
   tags:
@@ -35,9 +30,7 @@ docker_build_job:
   tags:
     - cloud-runner
   cache:
-    key: bjar
-    paths:
-      - target
+    key: build-cache
   only:
     - master
   script:
