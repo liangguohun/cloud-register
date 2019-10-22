@@ -16,12 +16,13 @@ stages:
 mvn_build_job:
   image: 192.168.1.4:5000/maven:3.6.2-ibmjava-8-alpine
   stage: package
+  cache:
+    paths:
+      - target/*.jar
   tags:
     - cloud-runner
   script:
     - mvn package -B -DskipTests
-    - echo $CI_PROJECT_DIR
-    - cp target/cloud-register.jar /workspace
 docker_build_job:
   stage: docker_build
   tags:
@@ -31,8 +32,6 @@ docker_build_job:
   script:
     # - docker info
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
-    - mkdir target
-    - cp /workspace/cloud-register.jar target/cloud-register.jar
     - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
     - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
 deploy_k8s_job:
