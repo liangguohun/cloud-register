@@ -4,6 +4,8 @@ metadata:
   name: cloud-register
 spec:
   replicas: 1
+  selector:
+    name: cloud-register
   template:
     metadata:
       labels:
@@ -16,6 +18,36 @@ spec:
         ports:
         - containerPort: 1111
           name: cloud-register
+
+# ---
+# apiVersion: v1
+# kind: ReplicationController
+# metadata:
+#   name: cloud-register
+#   labels:
+#     name: cloud-register
+# spec:
+#   replicas: 1
+#   selector:
+#     name: cloud-register
+#   template:
+#     metadata:
+#       labels: 
+#         name: cloud-register
+#     spec:
+#       containers:
+#       - name: cloud-register
+#         image: 192.168.1.4:5000/cloud-register:IMAGE_TAG
+#         imagePullPolicy: IfNotPresent
+#         env:
+#         - name: TZ
+#           value: Asia/Shanghai
+#         - name: INIT
+#           value: "false"
+#         ports:
+#         - containerPort: 1111
+#           name: cloud-register
+
 ---
 apiVersion: v1
 kind: Service
