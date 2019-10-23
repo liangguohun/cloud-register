@@ -3,7 +3,6 @@ services:
   - name: docker:19.03-dind
     command: ["--insecure-registry=192.168.1.4:5000"]
 variables:
-#  DOCKER_HOST: tcp://localhost:2375
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
   MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
@@ -28,20 +27,19 @@ docker_build_job:
   only:
     - master
   script:
-    # - docker info
-    - echo "--------------------"
-    - ls /opt/cache/
     - mkdir target && cp /opt/cache/cloud-register.jar target/
     - docker login -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD 192.168.1.4:5000
     - docker build -t 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID .
     - docker push 192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID
 deploy_k8s_job:
+  image: 192.168.1.4:5000/kubectl:v1.13.0
   stage: deploy_k8s
   tags:
     - cloud-runner
   script:
     - mkdir -p /etc/deploy/
-    - echo $kube_config |base64 -d > $KUBECONFIG
+    # - echo $kube_config |base64 -d > $KUBECONFIG
+    #- mkdir $HOME/.kube && cat $KUBE_CONFIG > $HOME/.kube/config
+    - mkdir $HOME/.kube && echo $kube_config |base64 -d > $HOME/.kube/config
     - sed -i "s/IMAGE_TAG/$CI_PIPELINE_ID/g" deployment.yaml
-    - cat deployment.yaml
     - kubectl apply -f deployment.yaml
