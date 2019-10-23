@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 1111
 spring:
 #  zipkin:
@@ -28,7 +28,7 @@ eureka:
     registry-fetch-interval-seconds: 30  #从eureka服务端获取注册信息的间隔时间
     service-url:
 #      defaultZone: http://regstry.letee.top/center
-      defaultZone: http://127.0.0.1:1111/eureka
+      defaultZone: http://192.168.1.4:1111/eureka
 #      defaultZone: http://192.168.1.5:1111/eureka
   instance:
     prefer-ip-address: true
