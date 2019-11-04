@@ -65,9 +65,9 @@ gitlab-ci-multi-runner register -n \
         mount_path = "/var/run/docker.sock"                                          
         host_path = "/var/run/docker.sock"                                           
       [[runners.kubernetes.volumes.host_path]]
-        name = "tmp-cache"
-        mount_path = "/opt/cache"
-        host_path = "/opt/cache"
+        name = "m2-cache"
+        mount_path = "/root/.m2/repository"
+        host_path = "/root/.m2/repository"
 ```
 
 #### 变量配置
