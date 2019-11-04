@@ -5,7 +5,7 @@ services:
 variables:
   DOCKER_DRIVER: overlay2
   KUBECONFIG: /etc/deploy/config
-  MAVEN_OPTS: "-Dmaven.repo.local=/opt/cache/.m2/repository"
+  MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=/root/.m2/repository"
 
 stages:
   - package
