@@ -36,10 +36,12 @@ deploy_k8s_job:
   stage: deploy_k8s
   tags:
     - cloud-runner
-  script:
-    - mkdir -p /etc/deploy/
-    # - echo $kube_config |base64 -d > $KUBECONFIG
-    #- mkdir $HOME/.kube && cat $KUBE_CONFIG > $HOME/.kube/config
-    - mkdir $HOME/.kube && echo $kube_config |base64 -d > $HOME/.kube/config
-    - sed -i "s/IMAGE_TAG/$CI_PIPELINE_ID/g" deployment.yaml
-    - kubectl apply -f deployment.yaml
+  script: 
+    - "mkdir $HOME/.kube && echo $kube_config |base64 -d > $HOME/.kube/config;"
+    - "set runner = kubectl get pods -n kube-system | awk '{if($1~/back-center/) print $1}';"
+    - if [! $runner ]; then
+        sed -i \"s/IMAGE_TAG/$CI_PIPELINE_ID/g\" deployment.yaml;
+        kubectl apply -f deployment.yaml;
+      else
+        kubectl rolling-update back-center --image=192.168.1.4:5000/back-center:$CI_PIPELINE_ID;
+      fi
