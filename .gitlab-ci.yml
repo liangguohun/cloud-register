@@ -38,10 +38,11 @@ deploy_k8s_job:
     - cloud-runner
   script: 
     - "mkdir $HOME/.kube && echo $kube_config |base64 -d > $HOME/.kube/config;"
-    - "set runner = kubectl get pods -n kube-system | awk '{if($1~/cloud-gateway/) print $1}';"
-    - if [ -n $runner ]; then
-        line='s/IMAGE_TAG/$CI_PIPELINE_ID/g'; sed -i "$line" deployment.yaml;
+    - "runner=$(kubectl get pods -n kube-system | awk '{if($1~/cloud-register/) print $1}');"
+    - if [ ! -n $runner ]; then
+        line="s/IMAGE_TAG/${CI_PIPELINE_ID}/g"; echo $line;sed -i "$line" deployment.yaml;
         kubectl apply -f deployment.yaml;
       else
-        kubectl rolling-update cloud-gateway --image=192.168.1.4:5000/cloud-gateway:$CI_PIPELINE_ID;
+        echo "up image $runner";
+        kubectl rolling-update cloud-register --image=192.168.1.4:5000/cloud-register:$CI_PIPELINE_ID -n kube-system;
       fi
