@@ -39,7 +39,7 @@ deploy_k8s_job:
   script: 
     - "mkdir $HOME/.kube && echo $kube_config |base64 -d > $HOME/.kube/config;"
     - "runner=$(kubectl get pods -n kube-system | awk '{if($1~/cloud-register/) print $1}');"
-    - if [ ! -n $runner ]; then
+    - if [ ! -n "$runner" ]; then
         line="s/IMAGE_TAG/${CI_PIPELINE_ID}/g"; echo $line;sed -i "$line" deployment.yaml;
         kubectl apply -f deployment.yaml;
       else
